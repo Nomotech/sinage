@@ -654,7 +654,8 @@ for(i=0;i<hand_num;i++){
 	);
 	handobj[i].palm.receiveShadow = true;
 	handobj[i].palm.castShadow = true;
-	scene.add(handobj[i].palm);
+	//scene.add(handobj[i].palm);
+	handobj[i].obj.add(handobj[i].palm);
 
 	handobj[i].cursor = new THREE.Mesh(
 		new THREE.IcosahedronGeometry(2,1),
@@ -670,7 +671,8 @@ for(i=0;i<hand_num;i++){
 	);
 	handobj[i].cursor.receiveShadow = true;
 	handobj[i].cursor.castShadow = true;
-	scene.add(handobj[i].cursor);
+	//scene.add(handobj[i].cursor);
+	handobj[i].obj.add(handobj[i].cursor);
 
 	handobj[i].finger_tip = new Array(5);
 	handobj[i].finger_dip = new Array(5);
@@ -786,7 +788,7 @@ for(i=0;i<hand_num;i++){
 		handobj[i].obj.add(handobj[i].finger_mcp[j]);	
 		
 	}
-	scene.add(handobj[i].obj);
+	//scene.add(handobj[i].obj);
 }
 
 var zoom_center= new THREE.Mesh(

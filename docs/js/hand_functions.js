@@ -8,131 +8,131 @@ var frameString = "", handString = "", fingerString = "";
 var hand, finger;
 var options = { enableGestures: true };
 // Main Leap Loop
-Leap.loop(options, function(frame) {
-  // ここで各フレームで認識した結果をハンドリングします．とりあえず先端位置座標を表示しましょう．
+// Leap.loop(options, function(frame) {
+//   // ここで各フレームで認識した結果をハンドリングします．とりあえず先端位置座標を表示しましょう．
   
-  handalive =0;
-  for (var i = 0, len = frame.hands.length; i < len; i++) {
-    // 「手」単位の処理
+//   handalive =0;
+//   for (var i = 0, len = frame.hands.length; i < len; i++) {
+//     // 「手」単位の処理
 
-    var handtype;
-    if(frame.hands[i].type=="right"){handtype = 0;handalive+=1;}
-    else {handtype =1;handalive+=2;}
+//     var handtype;
+//     if(frame.hands[i].type=="right"){handtype = 0;handalive+=1;}
+//     else {handtype =1;handalive+=2;}
     
-    handobj[handtype].finger_counter = 0b100000;
-    hand = frame.hands[i];
+//     handobj[handtype].finger_counter = 0b100000;
+//     hand = frame.hands[i];
 
-    //if(frame.hands[i].type=="right")handobj[i].type = 0;
-    //else handobj[i].type = 1;
+//     //if(frame.hands[i].type=="right")handobj[i].type = 0;
+//     //else handobj[i].type = 1;
 
-    // if(frame.hands[i].type=="right"){handobj[i].type = 0;righthand = i;}
-    // else if(frame.hands[i].type=="left"){handobj[i].type = 1;lefthand=i;}
-    handobj[handtype].grabradius = hand.sphereRadius;
-    if(handobj[handtype].grabradius<50)handobj[handtype].grabradius=50;
-    if(handobj[handtype].grabradius>80)handobj[handtype].grabradius=100;
-    handobj[handtype].grabradius = (handobj[handtype].grabradius-50)/30;
+//     // if(frame.hands[i].type=="right"){handobj[i].type = 0;righthand = i;}
+//     // else if(frame.hands[i].type=="left"){handobj[i].type = 1;lefthand=i;}
+//     handobj[handtype].grabradius = hand.sphereRadius;
+//     if(handobj[handtype].grabradius<50)handobj[handtype].grabradius=50;
+//     if(handobj[handtype].grabradius>80)handobj[handtype].grabradius=100;
+//     handobj[handtype].grabradius = (handobj[handtype].grabradius-50)/30;
     
-    handobj[handtype].grab = hand.grabStrength;
-    handobj[handtype].pitch = hand.pitch();
-    handobj[handtype].roll = hand.roll();
-    handobj[handtype].yaw = hand.yaw();
-    handobj[handtype].direction = new THREE.Vector3(hand.direction[2],hand.direction[1],hand.direction[0]);
-    handobj[handtype].palmnormal =  new THREE.Vector3(hand.palmNormal[2],hand.palmNormal[1],hand.palmNormal[0]);
-    hand_posi[handtype] = new THREE.Vector3(hand.palmPosition[2],hand.palmPosition[1],hand.palmPosition[0]);
+//     handobj[handtype].grab = hand.grabStrength;
+//     handobj[handtype].pitch = hand.pitch();
+//     handobj[handtype].roll = hand.roll();
+//     handobj[handtype].yaw = hand.yaw();
+//     handobj[handtype].direction = new THREE.Vector3(hand.direction[2],hand.direction[1],hand.direction[0]);
+//     handobj[handtype].palmnormal =  new THREE.Vector3(hand.palmNormal[2],hand.palmNormal[1],hand.palmNormal[0]);
+//     hand_posi[handtype] = new THREE.Vector3(hand.palmPosition[2],hand.palmPosition[1],hand.palmPosition[0]);
 
-    //for(j=0;j<5;j++)finger_pos[i][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-    for (var j = 0; j < hand.fingers.length; j++) {
-      // 「指」単位の処理
-      finger = hand.fingers[j];
+//     //for(j=0;j<5;j++)finger_pos[i][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//     for (var j = 0; j < hand.fingers.length; j++) {
+//       // 「指」単位の処理
+//       finger = hand.fingers[j];
       
-      var tip_vec =  new THREE.Vector3(finger.tipPosition[2] - hand.palmPosition[2],finger.tipPosition[1] - hand.palmPosition[1],finger.tipPosition[0] - hand.palmPosition[0]);
-      var dip_vec =  new THREE.Vector3(finger.dipPosition[2] - hand.palmPosition[2],finger.dipPosition[1] - hand.palmPosition[1],finger.dipPosition[0] - hand.palmPosition[0]);
-      var pip_vec =  new THREE.Vector3(finger.pipPosition[2] - hand.palmPosition[2],finger.pipPosition[1] - hand.palmPosition[1],finger.pipPosition[0] - hand.palmPosition[0]);
-      var mcp_vec =  new THREE.Vector3(finger.mcpPosition[2] - hand.palmPosition[2],finger.mcpPosition[1] - hand.palmPosition[1],finger.mcpPosition[0] - hand.palmPosition[0]);
-      finger_tip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + tip_vec.x/2, hand_posi[handtype].y + tip_vec.y/2, hand_posi[handtype].z + tip_vec.z/2);
-      finger_dip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + dip_vec.x/2, hand_posi[handtype].y + dip_vec.y/2, hand_posi[handtype].z + dip_vec.z/2);
-      finger_pip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + pip_vec.x/2, hand_posi[handtype].y + pip_vec.y/2, hand_posi[handtype].z + pip_vec.z/2);
-      finger_mcp[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + mcp_vec.x/2, hand_posi[handtype].y + mcp_vec.y/2, hand_posi[handtype].z + mcp_vec.z/2);
+//       var tip_vec =  new THREE.Vector3(finger.tipPosition[2] - hand.palmPosition[2],finger.tipPosition[1] - hand.palmPosition[1],finger.tipPosition[0] - hand.palmPosition[0]);
+//       var dip_vec =  new THREE.Vector3(finger.dipPosition[2] - hand.palmPosition[2],finger.dipPosition[1] - hand.palmPosition[1],finger.dipPosition[0] - hand.palmPosition[0]);
+//       var pip_vec =  new THREE.Vector3(finger.pipPosition[2] - hand.palmPosition[2],finger.pipPosition[1] - hand.palmPosition[1],finger.pipPosition[0] - hand.palmPosition[0]);
+//       var mcp_vec =  new THREE.Vector3(finger.mcpPosition[2] - hand.palmPosition[2],finger.mcpPosition[1] - hand.palmPosition[1],finger.mcpPosition[0] - hand.palmPosition[0]);
+//       finger_tip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + tip_vec.x/2, hand_posi[handtype].y + tip_vec.y/2, hand_posi[handtype].z + tip_vec.z/2);
+//       finger_dip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + dip_vec.x/2, hand_posi[handtype].y + dip_vec.y/2, hand_posi[handtype].z + dip_vec.z/2);
+//       finger_pip[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + pip_vec.x/2, hand_posi[handtype].y + pip_vec.y/2, hand_posi[handtype].z + pip_vec.z/2);
+//       finger_mcp[handtype][finger.type] = new THREE.Vector3(hand_posi[handtype].x + mcp_vec.x/2, hand_posi[handtype].y + mcp_vec.y/2, hand_posi[handtype].z + mcp_vec.z/2);
       
-      if(finger.extended){
-        switch(finger.type){
-          case 0:handobj[handtype].finger_counter +=0b010000; break; 
-          case 1:handobj[handtype].finger_counter +=0b001000; break;
-          case 2:handobj[handtype].finger_counter +=0b000100; break;
-          case 3:handobj[handtype].finger_counter +=0b000010; break;
-          case 4:handobj[handtype].finger_counter +=0b000001; break;
-          default: break;
-        }
-      }
-    }
-    //console.log(finger_counter.toString(2));
-  }
+//       if(finger.extended){
+//         switch(finger.type){
+//           case 0:handobj[handtype].finger_counter +=0b010000; break; 
+//           case 1:handobj[handtype].finger_counter +=0b001000; break;
+//           case 2:handobj[handtype].finger_counter +=0b000100; break;
+//           case 3:handobj[handtype].finger_counter +=0b000010; break;
+//           case 4:handobj[handtype].finger_counter +=0b000001; break;
+//           default: break;
+//         }
+//       }
+//     }
+//     //console.log(finger_counter.toString(2));
+//   }
   
-  if(handalive<1){//右手
-    hand_posi[0] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-    for (var j = 0; j < 5; j++) {
-      finger_tip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_dip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_pip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_mcp[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);  
-    }
-  }
-  if(handalive<2){//左手
-    hand_posi[1] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-    for (var j = 0; j < 5; j++) {
-      finger_tip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_dip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_pip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
-      finger_mcp[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);  
-    }
-  }
-  //console.log(handobj[0].pitch);
-  zoom();
+//   if(handalive<1){//右手
+//     hand_posi[0] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//     for (var j = 0; j < 5; j++) {
+//       finger_tip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_dip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_pip[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_mcp[0][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);  
+//     }
+//   }
+//   if(handalive<2){//左手
+//     hand_posi[1] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//     for (var j = 0; j < 5; j++) {
+//       finger_tip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_dip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_pip[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);
+//       finger_mcp[1][j] = new THREE.Vector3(camera_x*2,camera_y*2,camera_z*2);  
+//     }
+//   }
+//   //console.log(handobj[0].pitch);
+//   zoom();
   
 
-  if(handobj[0].pre_finger_counter>0b101111 && handobj[0].finger_counter < 0b101111)select_action();
+//   if(handobj[0].pre_finger_counter>0b101111 && handobj[0].finger_counter < 0b101111)select_action();
   
-  var dot = handobj[1].palmnormal.dot(new THREE.Vector3(0,1,0).normalize());//v_vecと射影ベクトルとの内積
-  handobj[1].palmangle_y = Math.acos(dot);//内積から角度を
-  var dot = handobj[1].palmnormal.dot(new THREE.Vector3(1,0,0).normalize());//v_vecと射影ベクトルとの内積
-  handobj[1].palmangle_x = Math.acos(dot);//内積から角度を
-  //console.log(palmangle);
-  if(user_menu_opened == false && forcuscard_hl == "user_menu")user_menu_open = true;
-  if(user_menu_opened == true  && (handobj[1].finger_counter&0b001111) <  0b000111 && forcuscard_hl != "user_menu")user_menu_open = false;
+//   var dot = handobj[1].palmnormal.dot(new THREE.Vector3(0,1,0).normalize());//v_vecと射影ベクトルとの内積
+//   handobj[1].palmangle_y = Math.acos(dot);//内積から角度を
+//   var dot = handobj[1].palmnormal.dot(new THREE.Vector3(1,0,0).normalize());//v_vecと射影ベクトルとの内積
+//   handobj[1].palmangle_x = Math.acos(dot);//内積から角度を
+//   //console.log(palmangle);
+//   if(user_menu_opened == false && forcuscard_hl == "user_menu")user_menu_open = true;
+//   if(user_menu_opened == true  && (handobj[1].finger_counter&0b001111) <  0b000111 && forcuscard_hl != "user_menu")user_menu_open = false;
 
-  if(frame.gestures.length) {
-    for(var i=0, len=frame.gestures.length; i<len; i++){
-      //console.log(frame.gestures[i].type);
-      switch (frame.gestures[i].type) {
-        case "swipe":
-          if(selected==1 && frame.gestures[0].speed>300){release_action();console.log("release");}
-          else if(menu_opened == false && (finger.tipVelocity[0]<-700))menu_open = true;
-          else if(menu_opened == true  && (finger.tipVelocity[0]>700))menu_open = false;
+//   if(frame.gestures.length) {
+//     for(var i=0, len=frame.gestures.length; i<len; i++){
+//       //console.log(frame.gestures[i].type);
+//       switch (frame.gestures[i].type) {
+//         case "swipe":
+//           if(selected==1 && frame.gestures[0].speed>300){release_action();console.log("release");}
+//           else if(menu_opened == false && (finger.tipVelocity[0]<-700))menu_open = true;
+//           else if(menu_opened == true  && (finger.tipVelocity[0]>700))menu_open = false;
           
-          //leap座標系　0...x 横 1...y 高さ 2...z 奥行
-          //console.log(frame.gestures[0].speed);
-          //console.log(finger.tipVelocity);
-          //motionObj.swipeAction(i,frame);
-          break;
-        case "circle":
+//           //leap座標系　0...x 横 1...y 高さ 2...z 奥行
+//           //console.log(frame.gestures[0].speed);
+//           //console.log(finger.tipVelocity);
+//           //motionObj.swipeAction(i,frame);
+//           break;
+//         case "circle":
          
-          break;
-        case "keyTap":
-          //click_action();
-          break;
-        case "screenTap":
-          //motionObj.screenTapAction(i,frame);
-          break;
-        default:
-          break;
-      }
-    }
-  }
-  //output.innerHTML = frameString;
-  //console.log(frameString);
-  for(i=0;i<hand_num;i++)handobj[i].pre_finger_counter = handobj[i].finger_counter;
+//           break;
+//         case "keyTap":
+//           //click_action();
+//           break;
+//         case "screenTap":
+//           //motionObj.screenTapAction(i,frame);
+//           break;
+//         default:
+//           break;
+//       }
+//     }
+//   }
+//   //output.innerHTML = frameString;
+//   //console.log(frameString);
+//   for(i=0;i<hand_num;i++)handobj[i].pre_finger_counter = handobj[i].finger_counter;
   
-});
+// });
 
 function hand_mode(r){
   var step = 360/user_menu_num; 

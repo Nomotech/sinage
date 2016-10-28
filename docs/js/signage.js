@@ -12,9 +12,9 @@ function render() {
 	camera.lookAt(camera_now.add(camera_look));
 	
 	//hand関係
-	hand_mode(theta_now);
-	cursor();
-	cursor_l();
+	//hand_mode(theta_now);
+	//cursor();
+	//cursor_l();
 	
 	//モードの変更とモードごとのステータス更新
 	mode_select()
@@ -35,7 +35,7 @@ function render() {
 	screen_vec_generation();
 
 	//手を描画
-	hand_draw();
+	//hand_draw();
 
 	menu_set();
 	user_menu_set();
@@ -44,7 +44,7 @@ function render() {
 	menu_select()
 
 	//objects.rotation.x +=0.01;
-	rot_obj_x = objects.rotation.x;
+	//rot_obj_x = objects.rotation.x;
 
 	requestAnimationFrame(render);
 	renderer.render(scene, camera);
