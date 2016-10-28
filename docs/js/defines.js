@@ -59,7 +59,7 @@ var key = new Array(300);
 
 var i;
 var j;
-var mode_num=5;
+var mode_num=7;
 var card_num = 56;
 var card = new Array(card_num);
 for(i=0;i<=card_num;i++){
